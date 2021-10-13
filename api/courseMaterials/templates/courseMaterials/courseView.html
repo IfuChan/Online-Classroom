@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+
+
+  {% block content %}
+  <section id="best-features" class="text-center">
+    {% csrf_token %}
+    {% if user.userprofile.user_type == 'teacher' or user.is_superuser %}
+    <br><a href="{% url 'course_view_create' semester=semesters.slug %}"class="btn btn-primary">Add New Course</a>
+    {% endif %}
+                <h3 class="mb-5 mt-5 font-weight-bold" style="color:hsl(0, 13%, 19%);;">Courses</h2>
+                    <div class="col-md-12 d-flex mb-5 justify-content-center">
+                        <div class="text-center" style="width: 25rem;">
+                          <div class="text-center">
+                          {% if user.is_authenticated %}
+                    {% for course in semesters.courses.all %}
+                    <div class="card text-dark bg-secondary mt-4 mb-3" style="max-width: 25rem;"><br>
+                                <h5 class="card" style="color:hsl(0, 13%, 19%);">Course Name: {{course.name}}</h4>
+                                <h6 class="card" style="color:hsl(0, 13%, 19%);">CourseID: {{course.courseId}}</h4>
+                                {% if user.userprofile.user_type == 'teacher' or user.is_superuser %}
+                                  <h6 class="card" style="color:hsl(0, 13%, 19%);">Course Code: {{course.code}}</h4>
+                                {% endif %}
+                                <p class="card">Course Description:{{course.description}}</p>
+                                <a href="{% url 'lecture_view' slug=course.slug semester=semesters.slug %}">
+                                <button class="btn btn-primary" style="color:hsl(0, 70%, 90%);"> <span> Proceed  </span></button></a> 
+                              </div>
+                {% endfor %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+               
+  </section>
+  {%endblock%}

@@ -1,0 +1,90 @@
+{% extends 'home.html' %}{% load static %}
+
+{% block content %}
+<!-- internal css Start -->
+<Style>
+    .notes{
+        padding: 1rem;
+        background-color: #fff;
+        border-radius: 5px;
+        margin: 1rem 0;
+        background-color: lightseagreen
+    }
+    .note-counter, .note-text{
+        font-size: 1.4rem;
+    }
+    .note-title{
+        font: 1.6rem;
+    }
+    .note-btn{
+        padding: 7px;
+        margin-top: 5px;
+        background-color: red;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+    }
+    .edit-btn{
+        background-color: rosybrown;
+    }
+</Style>
+<!-- internal css End -->
+
+<!-- html Code Start -->
+<section>
+    <div class="container">
+        <h2>Notes</h2>
+        <hr>
+        <div class="notes" id="notes">
+            <!-- Add Note Button -->
+{% if user.is_authenticated %}
+<div class="col-md-4 mt-4">
+<button style="margin-left: -5%" id="add-note">Add Note</button><br><br>
+</div>
+{% endif %}
+            {% for note in notes %}
+            <div class="note">
+                <p class="note-counter">Note{{ note.id }}</p>
+                <h3 class="note-title">{{ note.title }}</h3>
+                <p class="note-text">{{ note.details }}</p>
+                <button class="note-btn edit-btn">Edit Note</button>
+                <button class="note-btn">Delete Note</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- html Code End -->
+
+
+<!-- Note form Start -->
+<div class="bg-modal">
+    <div class="modal-content">
+        <div class="close">+</div>
+        <h1>My Notes</h1>
+        <form action="note" method="POST">
+            {% csrf_token %}
+            <input type="text" name="note-title" placeholder="Note title">
+            <input class="ta" type="text" name="note-text" placeholder="Note details">
+            <!-- <textarea name="note-text" placeholder="Note details"></textarea> -->
+
+            <button id="add-btn" type="submit">Add Note</button>
+        </form>
+    </div>
+</div>
+<!-- Note form End -->
+
+<!-- Note Modal JS Start -->
+<script>
+    document.getElementById('add-note').addEventListener('click', function() {
+        document.querySelector('.bg-modal').style.display = 'flex';
+    })
+
+    document.querySelector('.close').addEventListener('click', function() {
+        document.querySelector('.bg-modal').style.display = 'none';
+    })
+</script>
+<!-- Note Modal JS End -->
+
+{% endblock %}

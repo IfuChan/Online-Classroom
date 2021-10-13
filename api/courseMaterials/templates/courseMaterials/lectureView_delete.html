@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<h2> Do you want to delete this lecture?</h2>
+<form method="post">
+
+{% csrf_token %}
+
+
+<input type="submit" value="submit" class="btn btn-warning" value="delete">
+<a href="{% url 'lecture_view_lec' semester=lectures.Semester.slug course=lectures.subject.slug slug=lectures.slug %} " class="btn btn-secondary" >Cancel</a>
+
+</form>
+
+{% endblock %}

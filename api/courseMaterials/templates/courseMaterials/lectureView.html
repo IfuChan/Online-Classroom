@@ -1,0 +1,29 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<section id="best-features" class="text-center">
+              <h2 class="mb-5 mt-5 font-weight-bold" style="color:#2d3742;">Chapters and Names:</h2>
+              <div class="row d-flex justify-content-center mb-4">
+              </div>
+              <div class="row d-flex justify-content-center mb-3">
+                {% for lecture in courses.lectures.all %}
+                <div class="col-sm-4 mb-4">
+                  <div class="card box-shadow-hover" style="background-color: lightseagreen; margin-left: 10%; margin-right: 10%;">
+                    <div class="card-body">
+                      <h5 class="card-title">Chapter-{{lecture.position}}: {{lecture.name}}</h5>
+                      <a href="{% url 'lecture_view_lec' slug=lecture.slug course=courses.slug semester=lecture.Semester.slug %}">
+                        <button type="button" class="btn btn-primary" style="color: rgb(236, 235, 230); background-color: rgb(0, 162, 255);"><span>Proceed</span></button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+        <div class="row d-flex justify-content-center mb-3">
+          {% if user.userprofile.user_type == 'teacher' or user.is_superuser %}
+           <a href="{% url 'lecture_view_create' semester=courses.semester.slug slug=courses.slug %}"><button type="button" class="btn btn-success btn-lg btn-bloc" > Add new Lecture </button> </a>
+          {% endif %}
+        </div>
+</section>
+
+{%endblock%}

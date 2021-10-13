@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<br>
+
+<form method="post">
+
+{% csrf_token %}
+{{form.as_p}}
+ <div class="button">
+<input type="submit" value="submit" class="btn btn-primary">
+<input type="reset" value="reset" class="btn btn-warning" onclick="location.href='{% url 'index' %}'">
+<a href="{% url 'lecture_view_lec' semester=lectures.Semester.slug course=lectures.subject.slug slug=lectures.slug %}" class="btn btn-danger">Cancel</a>
+ </div>
+</form>
+
+{% endblock %}

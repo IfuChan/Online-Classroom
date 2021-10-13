@@ -1,0 +1,31 @@
+{% extends 'home.html' %}
+
+{% block content %}
+{% load static %}
+
+<body  style="background-color: #a9e9e4 ;">
+
+<div class="container" >
+  <div class="container-fluid">
+    <div class="text-center mt-5">
+      <form method="post" style="max-width: 380px;margin: auto;padding-top: 30px;">
+        {% csrf_token %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Please Log In</h1>
+        <label for="username"></label>
+        <input type="text" class="form-control" placeholder="Username" name="username" maxlength="150" autofocus required id="id_username">
+
+        <label for="password"></label>
+        <input type="password" class="form-control" placeholder="Password" name="password" type="password" >
+
+        <input class="btn btn-primary mt-3"  type="submit" value="Login">
+        
+        <input class="btn btn-primary mt-3" type="reset" value="Reset" class="btn btn-reset btn-primary" style="padding-top: 3px;" />
+        <input class="btn btn-primary mt-3" type="button" value="Cancel" class="btn btn-cancel btn-primary" style="padding-top: 3px;"
+          onclick="location.href='{% url 'index' %}'">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+</body>

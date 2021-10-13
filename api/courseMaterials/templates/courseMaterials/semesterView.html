@@ -1,0 +1,36 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %} 
+
+Semester 
+
+{% endblock %}
+
+{% block content %}
+
+<section id="best-features" class="text-center">
+              <h2 class="mb-5 mt-5 font-weight-bold" style="color:hsl(0, 13%, 19%);"> <u>   Select Semester</u></h2>
+              <div class="row d-flex justify-content-center mb-4">
+              <div class="row">
+                      {% for semester in semesters %}
+                      <div class="col-md-4 d-flex mb-5 justify-content-center">
+                        <div class="text-center" style="width: 20rem;">
+                          <div class="text-center">
+                            {% if user.is_authenticated %}
+                            <h4 class="card " style="color:#382b2b;"  > {{semester.name}}</h4>
+                          <textarea name="" id="" cols="30" rows="2"  >Des: {{semester.description}}</textarea>
+                            
+                            <a href="{% url 'course_view' slug=semester.slug %}" class="btn btn-primary" style="background-color:#4f33cc;">Proceed</a>
+                            {%else%}
+                            <p>Login to start the classroom</p>
+                            <a href="{% url 'index' %}" class="nav-link">Home</a>
+                            <a href="{% url 'user_login' %}" class="nav-link">Login</a>
+                            {%endif%}
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+              </div>
+</section>
+
+{%endblock%}

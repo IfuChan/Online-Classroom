@@ -1,0 +1,59 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<style type="text/css">
+.container {
+    background-color: #a9e9e4 ;
+                position: absolute;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                    -ms-flex-pack: center;
+                        justify-content: center;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                    -ms-flex-align: center;
+                        align-items: center;
+                height: 100%;
+                width: 100%;
+                margin: 0;
+}
+
+</style>
+
+<div class="container;" style="width: 50rem; margin-right: 50% ; margin-left: 20%;">
+<section  id="best-features" class="text-center" >
+    <h2 class="mb-5 mt-5 font-weight-bold" style="color:hsl(0, 13%, 19%);"> <u>   Add New Lecture</u></h2>
+    <div class="row d-flex justify-content-center mb-4">
+    <div class="row">
+<form method="post">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+    {% if user.userprofile.user_type == 'teacher' or user.is_superuser %}
+    <h4 class="card " style="color:#382b2b; background-color: #e5eafc ;"  > {{form.as_p}}</h4>  
+    <input type="submit" value="submit" class="btn btn-primary">
+    <input type="reset" value="reset" class="btn btn-warning" onclick="location.href='{% url 'index' %}'">
+    
+    {%else%}
+    <p>Login to start the classroom</p>
+    <a href="{% url 'index' %}" class="nav-link">Home</a>
+    <a href="{% url 'user_login' %}" class="nav-link">Login</a>
+    <h3>Login as Admin or Teacher</h3>
+    {%endif%}
+
+
+{%endif%}
+</div>
+
+
+</form>
+</div>
+ </div>
+</section>
+
+{% endblock %}
+    

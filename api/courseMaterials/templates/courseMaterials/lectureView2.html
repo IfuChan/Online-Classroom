@@ -1,0 +1,65 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+<br>
+<div class="card" style="width: 20rem; margin-right: 50% ; margin-left: 39%;" >
+    {% if user.userprofile.user_type == 'teacher' or user.is_superuser %}
+<a class="btn btn-secondary" href="{% url 'lecture_view_update' semester=lectures.Semester.slug course=lectures.subject.slug slug=lectures.slug %} " >Update</a>
+<a class="btn btn-warning"   href="{% url 'lecture_view_delete' semester=lectures.Semester.slug course=lectures.subject.slug slug=lectures.slug %} " >Delete</a>
+{% endif %}
+</div>
+<section class="text-center">
+    <h2 class="mb-0 mt-5 font-weight-bold" style="color:#307ab6;">Lecture Details</h2> <br>
+    <div class="row d-flex justify-content-center mb-3">
+            <div class="card" style="background-color: lightseagreen; width: 20rem; margin-right: 50% ; margin-left: 50%;"> 
+               Course Name: {{ lectures.subject }} 
+        </div> 
+        <div class="card" style="background-color: lightseagreen; width: 20rem; margin-right: 50% ; margin-left: 50%;"> 
+            Lecture Name: {{ lectures.name }} 
+     </div> 
+       
+        <div class="card" style="background-color: lightseagreen; width: 20rem; margin-right: 50% ; margin-left: 50%;"> 
+             Created by: {{ lectures.created_by }} 
+        </div>
+        <div class="card" style="background-color: lightseagreen; width: 20rem; margin-right: 50% ; margin-left: 50%;" title="Source Title">Created on: {{ lectures.created_at }}   
+        </div>
+    </div>
+
+    <div class="card" style="background-color: lightseagreen; width: 20rem; margin-right: 50% ; margin-left: 39%;" >
+        {% if lectures.pdf %}
+
+        <p class="card-text">Download pdf from the lecture</p>
+        <div class="card" style="background-color: lightseagreen; width: 20rem; margin-top: 0%; ">pdf name:{{ lectures.pdf }}</div>
+        
+        <a href="{{lectures.pdf.url}}" download>
+         
+        <button style="margin-top: 3%;" type="button" class="button-les"><span>Download FIles</span></button>
+        </a>
+        <div style="margin-top: 5%; background-color: lightseagreen;" class="card">Enter or Watch files</div>
+        <a href="{{lectures.pdf.url}}" watch>
+         
+        <button style="margin-top: 3%;" type="button" class="button-les"><span>Go</span></button>
+        </a>
+        {% else %}
+        <p class="card-text" > No PDF available</p>
+        {% endif %}
+
+      
+    </div>
+<h4><br> Ask your question here:</h4>
+<form method="post">
+    <div class="form-group"> 
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" name="form" class="btn btn-primary" value="Submit Your Question">
+    </div>
+</form>
+
+{% for askquestion in lectures.askquestions.all %}
+<h4> {{askquestion.user_name}}  <small> <i> posted on {{askquestion.date_of_question}} </i></small></h4>
+<p>{{askquestion.comment_box}}</p>
+
+{% endfor %}
+
+{% endblock %}
